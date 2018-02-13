@@ -9,4 +9,6 @@ Overview:
 - Chapter 2 ISLR           : The chapter 2 code-along R exercise in Introduction to Statistical Learning.
 - Chapter 2 ISLR Assignment: The chapter 2 assignment after the code-along introduction to R.
 - Chapter 3 ISLR           : Linear and Multiple Regression
-- Chapter 4 ISLR           : Logistic Regression
+- Chapter 4 ISLR           : Logistic Regression, LDA, QDA, KNN
+- Chapter 5 ISLR           : Resampling Methods
+- Chapter 9 ISLR           : Support Vector Machines
