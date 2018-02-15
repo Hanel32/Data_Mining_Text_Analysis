@@ -48,3 +48,30 @@ svmfit=svm(y~., data=dat, kernel="linear", cost=1)
 summary(svmfit)
 plot(svmfit, dat)
 
+################## RADIAL KERNELS #######################
+set.seed(1)
+x=matrix(rnorm(200*2), ncol=2)
+x[1:100,] = x[1:100,]+2
+x{101:150,]=x[101:150,]-2
+y=c(rep(-1,150), rep(1,50))
+dat=data.frame(x=x, y=as.factor(y))
+plot(x, col=(y+3), pch=(y+19), cex=2)
+
+train=sample(200,100)
+svm.radial=svm(y~., data=dat[train,], kernal="radial", gamma=1, cost=1)
+plot(svm.radial, dat[train,])
+
+set.seed(1)
+tune.out=tune(svm, y~., data=dat[train,], kernal = "radial", ranges=list(lost=10^(-1:2), gamma=x(0.5, 1:4)))
+summary(tune.out)
+ypred=predict(tune.out$best.model, newdata=dat[-train,])
+table(predict=ypred, truth=dat[-train, "y"])
+
+svm.poly=svm(y~., data=data[train,], kernel="polynomial", degree=2, cost=1)
+plot(svm.poly, dat[train,])
+
+set.seed(1)
+tune.out=tune(svm, y~., data=dat[train,], kernel="polynomial", ranges=list(cost^10(-1:2), degree=(1:4)))
+summary(tune.out)
+ypred=predict(tune.out$best.model, newdata=dat[-train,])
+table(predict=ypred, truth=dat[-train,])
