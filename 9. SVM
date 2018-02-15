@@ -1,0 +1,50 @@
+set.seed(1)
+x=matrix(rnorm(20*2), ncol=2)
+y=c(rep(-1,10), rep(1,10))
+x[y==1,] = x[y==1,] + 1
+plot(x, col=(y+3),pch=(y+19),cex=2)
+
+dat=data.frame(x=x, y=as.factor(x))    # Creates a dataframe of x values with y as a factor/function of x
+dat                                    # Previews the dat datastructure
+library(e1071)
+svmfit=svm(y~., data=dat, kernel="linear", cost=10, scale=F)
+summary(svmfit)
+
+svmfit$index
+svmfit$SV
+dat[svmfit$index,]
+plot(svmfit,dat)
+
+t.out=tune(svm, y~., data=dat, kernel="linear", ranges=list(cost=10^(-3:3)))
+summary(t.out)
+plot(t, out)
+best = t.out$best.model
+summary(best)
+plot(best, dat)
+
+xtext=matrix(rnorm(20*2), ncol=2)
+ytest=sample(c(-1,1), 20, rep=T)
+xtest[ytest==1,]=xtest[ytest==1,]+1
+testdat=data.frame(x=xtest, y=as.factor(ytest)
+ypred = predict(best, testdat)
+table(predict=ypred, truth=testdat$y)
+
+svmfit=svm(y~., data=dat, kernal="linear", cost=0.01, scale=F)
+ypred=predict(svmfit, testdat)
+table(predict=ypred, truth=testdat$y)
+
+x[y==1,]=x[y==1,]+0.5
+plot(x, col=(y+3), pch=(y+19), cex=2)
+
+dat=data.frame(x=x, y=as.factor(y))
+svmfit=svm(y~., data=dat, kernel="linear", cost=1e5)
+summary(svmfit)
+plot(svmfit, dat)
+
+ypred=predict(svmfit, testdat)
+table(predict=ypred, truth=testdat$y)
+
+svmfit=svm(y~., data=dat, kernel="linear", cost=1)
+summary(svmfit)
+plot(svmfit, dat)
+
