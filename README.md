@@ -10,5 +10,7 @@ Overview:
 - Chapter 2 ISLR Assignment: The chapter 2 assignment after the code-along introduction to R.
 - Chapter 3 ISLR           : Linear and Multiple Regression
 - Chapter 4 ISLR           : Logistic Regression, LDA, QDA, KNN
+- Tidy R                   : A Tidy approach at text analysis using R
+- Sentiment Analysis       : An R approach to analyzing sentiment in a text corpus
 - Chapter 5 ISLR           : Resampling Methods
 - Chapter 9 ISLR           : Support Vector Machines
