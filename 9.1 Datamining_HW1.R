@@ -22,15 +22,7 @@ x2=runif(200)-0.5
 y=1*(x1^2-x2^2>0)
 plot(x1, x2, col=(y+1), pch=(y+19), cex=2)
 
-###############################################################################
-# Fit a support vector classifier (tuned) to the data with X1 and X2 as predi-#
-# ctors. Obtain a class prediction for each test observation. Plot the traini-#
-# ng and test observations, colored according to the predicted class labels   #
-#                                                                             #
-# A note here:                                                                #
-#    These data have a polynomial of order 2 relationship. A simpler linear   #
-#    kernal is not going to be sufficient to correctly classify.              #
-###############################################################################
+# Prepare the data for the SVM
 # Import the SVM library
 install.packages("e1071")
 library(e1071)
@@ -43,19 +35,45 @@ x
 dat = data.frame(x=x, y=as.factor(y))
 dat
 
-# Create a test/train split
-index     = 1:nrow(x)
-testindex = sample(index, trunk(length(index)/3))
-testset   = x[textindex,  ]
-trainset  = x[-textindex, ]
+###############################################################################
+# Fit a support vector classifier (tuned) to the data with X1 and X2 as predi-#
+# ctors. Obtain a class prediction for each test observation. Plot the traini-#
+# ng and test observations, colored according to the predicted class labels   #
+#                                                                             #
+# A note here:                                                                #
+#    These data have a polynomial of order 2 relationship. A simpler linear   #
+#    kernal is not going to be sufficient to correctly classify.              #
+###############################################################################
 
-# Tune the SVM
-t.out=tune(svm, y~., data=dat, kernel="linear", ranges=list(cost=10^(-3:3)))
-summary(t.out)
+# Tune the SVM, output the results
+tl.out=tune(svm, y~., data=dat, kernel="linear", ranges=list(cost=10^(-4:4)))
+summary(tl.out)
+bestl = tl.out$best.model
+plot(bestl, dat)
 
-# The tune I got was:
-#    - The best cost       : 10
-#    - The best performance: 0.45
-#
-# Derive the best fit model, and plot.
+
+###############################################################################
+# Fit a support vector classifier (tuned) using a polynomial kernel. Obtain a #
+# class prediction for each training and test observation. Plot the training  #
+# and test observations, colored according to predicted class labels.         #
+###############################################################################
+
+# Tune the SVM, output the results
+tp.out=tune(svm, y~., data=dat, kernel="polynomial", ranges=list(cost=10^(-1:2), degree=(1:4)))
+summary(tp.out)
+bestp = tp.out$best.model
+plot(bestp, dat)
+
+###############################################################################
+# Fit a support vector classifier (tuned) using a radial kernel. Obtain a     #
+# class prediction for each training and test observation. Plot the training  #
+# and test observations, colored according to predicted class labels.         #
+###############################################################################
+
+# Tune the SVM, output the results
+tr.out=tune(svm, y~., data=dat, kernel="radial", ranges=list(cost=10^(-1:2), gamma=c(0.5, 1:4)))
+summary(tr.out)
+bestr = tr.out$best.model
+plot(bestr, dat)
+
 
