@@ -54,6 +54,14 @@ summary(tl.out)
 bestl = tl.out$best.model
 plot(bestl, dat)
 
+# Get predictions for training set
+lin_train_ypred = predict(bestl, newdata=dat[train,])
+table(predict=lin_train_ypred, truth=dat[train, "y"])
+
+# Get predictions for test set
+lin_test_ypred  = predict(bestl, newdata=dat[-train,])
+table(predict=lin_test_ypred, truth=dat[-train, "y"])
+
 # Plot training set
 plot(bestl, dat[train,])
 
@@ -72,6 +80,14 @@ summary(tp.out)
 bestp = tp.out$best.model
 plot(bestp, dat)
 
+# Get predictions for training set
+poly_train_ypred = predict(bestp, newdata=dat[train,])
+table(predict=poly_train_ypred, truth=dat[train, "y"])
+
+# Get predictions for test set
+poly_test_ypred  = predict(bestp, newdata=dat[-train,])
+table(predict=poly_test_ypred, truth=dat[-train, "y"])
+
 # Plot training set
 plot(bestp, dat[train,])
 
@@ -88,6 +104,14 @@ plot(bestp, dat[-train,])
 tr.out=tune(svm, y~., data=dat[train,], kernel="radial", ranges=list(cost=10^(-1:2), gamma=c(0.5, 1:4)))
 summary(tr.out)
 bestr = tr.out$best.model
+
+# Get predictions for training set
+radial_train_ypred = predict(bestr, newdata=dat[train,])
+table(predict=radial_train_ypred, truth=dat[train, "y"])
+
+# Get predictions for test set
+radial_test_ypred  = predict(bestr, newdata=dat[-train,])
+table(predict=radial_test_ypred, truth=dat[-train, "y"])
 
 # Plot training set
 plot(bestr, dat[train,])
