@@ -35,6 +35,9 @@ x
 dat = data.frame(x=x, y=as.factor(y))
 dat
 
+# Designate the sample for train
+train=sample(200,100)
+
 ###############################################################################
 # Fit a support vector classifier (tuned) to the data with X1 and X2 as predi-#
 # ctors. Obtain a class prediction for each test observation. Plot the traini-#
@@ -46,11 +49,16 @@ dat
 ###############################################################################
 
 # Tune the SVM, output the results
-tl.out=tune(svm, y~., data=dat, kernel="linear", ranges=list(cost=10^(-4:4)))
+tl.out=tune(svm, y~., data=dat[train,], kernel="linear", ranges=list(cost=10^(-4:4)))
 summary(tl.out)
 bestl = tl.out$best.model
 plot(bestl, dat)
 
+# Plot training set
+plot(bestl, dat[train,])
+
+# Plot testing set
+plot(bestl, dat[-train,])
 
 ###############################################################################
 # Fit a support vector classifier (tuned) using a polynomial kernel. Obtain a #
@@ -59,10 +67,16 @@ plot(bestl, dat)
 ###############################################################################
 
 # Tune the SVM, output the results
-tp.out=tune(svm, y~., data=dat, kernel="polynomial", ranges=list(cost=10^(-1:2), degree=(1:4)))
+tp.out=tune(svm, y~., data=dat[train,], kernel="polynomial", ranges=list(cost=10^(-1:2), degree=(1:4)))
 summary(tp.out)
 bestp = tp.out$best.model
 plot(bestp, dat)
+
+# Plot training set
+plot(bestp, dat[train,])
+
+# Plot testing set
+plot(bestp, dat[-train,])
 
 ###############################################################################
 # Fit a support vector classifier (tuned) using a radial kernel. Obtain a     #
@@ -71,9 +85,13 @@ plot(bestp, dat)
 ###############################################################################
 
 # Tune the SVM, output the results
-tr.out=tune(svm, y~., data=dat, kernel="radial", ranges=list(cost=10^(-1:2), gamma=c(0.5, 1:4)))
+tr.out=tune(svm, y~., data=dat[train,], kernel="radial", ranges=list(cost=10^(-1:2), gamma=c(0.5, 1:4)))
 summary(tr.out)
 bestr = tr.out$best.model
-plot(bestr, dat)
 
+# Plot training set
+plot(bestr, dat[train,])
+
+# Plot testing set
+plot(bestr, dat[-train,])
 
