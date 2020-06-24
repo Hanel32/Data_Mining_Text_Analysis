@@ -1,5 +1,5 @@
 # ISLR_labs
-Holding the lab code while working through ISLR for CSCE 489: Data Mining in Social Networks.
+Natural Language Processing and Statistical Learning notes from Texas A&M University's CSCE 489: Special Topics in Data Mining in Social Networks taught by guest lecturer Dr. Eduardo Nakamura of Brazil.
 
 Here we go! I've officially started work on this book/language as well.
 
